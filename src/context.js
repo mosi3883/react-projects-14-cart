@@ -29,11 +29,11 @@ const AppProvider = ({ children }) => {
   };
 
   const increase = (id) => {
-    dispatchState({ type: 'INCREASE', payload: id });
+    dispatchState({ type: 'CHANGE_AMOUNT', payload: { id: id, amount: 1 } });
   };
 
   const decrease = (id) => {
-    dispatchState({ type: 'DECREASE', payload: id });
+    dispatchState({ type: 'CHANGE_AMOUNT', payload: { id: id, amount: -1 } });
   };
 
   useEffect(() => {

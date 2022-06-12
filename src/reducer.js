@@ -19,7 +19,6 @@ const reducer = (oldState, action) => {
     const newCart = oldState.cart;
     return {
       ...oldState,
-      cart: newCart,
       totalPrice: calcTotalPrice(newCart),
       totalAmount: calcTotalAmount(newCart),
     };
@@ -40,28 +39,16 @@ const reducer = (oldState, action) => {
     };
   }
 
-  if (action.type === 'INCREASE') {
-    let newCart = oldState.cart.map((item) => {
-      if (item.id === action.payload) {
-        const newAmount = item.amount + 1;
+  if (action.type === 'CHANGE_AMOUNT') {
+    const amount = action.payload.amount;
 
-        return { ...item, amount: newAmount > 9 ? 9 : newAmount };
-      }
-      return item;
-    });
-    return {
-      ...oldState,
-      cart: newCart,
-      totalPrice: calcTotalPrice(newCart),
-      totalAmount: calcTotalAmount(newCart),
-    };
-  }
-
-  if (action.type === 'DECREASE') {
     let newCart = oldState.cart
       .map((item) => {
-        if (item.id === action.payload) {
-          const newAmount = item.amount - 1;
+        if (item.id === action.payload.id) {
+          let newAmount = item.amount + amount;
+          if (newAmount > item.maxAmount) {
+            newAmount = item.maxAmount;
+          }
           return { ...item, amount: newAmount };
         }
         return item;
