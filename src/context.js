@@ -16,6 +16,10 @@ const initialState = {
 const AppProvider = ({ children }) => {
   const [state, dispatchState] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    dispatchState({ type: 'INIT' });
+  }, []);
+
   const clearCart = () => {
     dispatchState({ type: 'CLEAR_CART' });
   };
@@ -31,6 +35,10 @@ const AppProvider = ({ children }) => {
   const decrease = (id) => {
     dispatchState({ type: 'DECREASE', payload: id });
   };
+
+  useEffect(() => {
+    dispatchState({});
+  }, [state.cart]);
 
   return (
     <AppContext.Provider
